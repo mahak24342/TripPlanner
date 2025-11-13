@@ -37,40 +37,40 @@ export default function Login() {
           Discover, plan, and personalize your trips effortlessly.  
           Let our AI craft the perfect itinerary for you — from flights to hidden gems.
         </p>
-        <p className="italic opacity-80 text-gray-600">
+        <p className="italic opacity-80 text-gray-600 mb-8">
           “Your next adventure starts with one click.”
         </p>
+
+        {/* Get Started Button */}
+        {!showSignIn && (
+          <button
+            onClick={() => setShowSignIn(true)}
+            className="bg-gradient-to-r from-rose-400 to-orange-400 hover:from-rose-500 hover:to-orange-500 text-white px-8 py-3 rounded-xl font-medium transition-all duration-200 shadow-md hover:shadow-lg"
+          >
+            Get Started
+          </button>
+        )}
       </div>
 
-      {/* Right side - Get Started / Login card */}
-      <div className="flex-1 flex items-center justify-center p-6">
-        <div className="bg-white/70 backdrop-blur-lg p-8 shadow-xl rounded-3xl border border-white/30 w-full max-w-sm text-center transition-all duration-300">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-            {showSignIn ? "Sign in to Continue" : "Welcome to TripPlanner.ai"}
-          </h2>
-          <p className="text-gray-500 mb-6">
-            {showSignIn
-              ? "Plan your next trip in seconds with AI 🚀"
-              : "Get started to explore personalized travel experiences."}
-          </p>
-
-          {!showSignIn ? (
-            <button
-              onClick={() => setShowSignIn(true)}
-              className="bg-gradient-to-r from-rose-400 to-orange-400 hover:from-rose-500 hover:to-orange-500 text-white px-6 py-3 rounded-xl w-full font-medium transition-all duration-200 shadow-md hover:shadow-lg"
-            >
-              Get Started
-            </button>
-          ) : (
+      {/* Right side - Login card (only shows after Get Started) */}
+      {showSignIn && (
+        <div className="flex-1 flex items-center justify-center p-6 animate-fadeIn">
+          <div className="bg-white/70 backdrop-blur-lg p-8 shadow-xl rounded-3xl border border-white/30 w-full max-w-sm text-center transition-all duration-300">
+            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+              Sign in to Continue
+            </h2>
+            <p className="text-gray-500 mb-6">
+              Plan your next trip in seconds with AI 🚀
+            </p>
             <button
               onClick={() => signIn("google")}
-              className="bg-gradient-to-r from-rose-400 to-orange-400 hover:from-rose-500 hover:to-orange-500 text-white px-6 py-3 rounded-xl w-full font-medium transition-all duration-200 shadow-md hover:shadow-lg animate-fadeIn"
+              className="bg-gradient-to-r from-rose-400 to-orange-400 hover:from-rose-500 hover:to-orange-500 text-white px-6 py-3 rounded-xl w-full font-medium transition-all duration-200 shadow-md hover:shadow-lg"
             >
               Sign in with Google
             </button>
-          )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
