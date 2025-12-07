@@ -1,12 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const { data: session } = useSession();
+  const router = useRouter();
   const [showSignIn, setShowSignIn] = useState(false);
 
+  // Redirect logged-in user to /dashboard
+  useEffect(() => {
+    if (session) {
+      router.push("/dashboard");
+    }
+  }, [session, router]);
+
+  // While session is loading, optionally show a loader
   if (session) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-rose-50 via-orange-50 to-amber-100 text-center p-6">
@@ -14,14 +24,8 @@ export default function Login() {
           Welcome back, {session.user?.name} 👋
         </h1>
         <p className="text-gray-600 mb-8 text-lg">
-          Ready to plan your next amazing journey?
+          Redirecting to your dashboard...
         </p>
-        <button
-          onClick={() => signOut()}
-          className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
-        >
-          Sign out
-        </button>
       </div>
     );
   }
@@ -30,7 +34,7 @@ export default function Login() {
     <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-rose-50 via-orange-50 to-amber-100">
       {/* Left side - Banner text */}
       <div className="flex-1 flex flex-col justify-center items-center text-gray-800 p-10 text-center md:text-left">
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-orange-400">
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-pink-400">
           AI Travel Planner ✈️
         </h1>
         <p className="text-lg md:text-xl max-w-md mb-6 text-gray-700">
@@ -45,7 +49,7 @@ export default function Login() {
         {!showSignIn && (
           <button
             onClick={() => setShowSignIn(true)}
-            className="bg-gradient-to-r from-rose-400 to-orange-400 hover:from-rose-500 hover:to-orange-500 text-white px-8 py-3 rounded-xl font-medium transition-all duration-200 shadow-md hover:shadow-lg"
+            className="bg-rose-500 hover:bg-rose-600 text-white px-10 py-3 rounded-2xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl"
           >
             Get Started
           </button>
@@ -64,7 +68,7 @@ export default function Login() {
             </p>
             <button
               onClick={() => signIn("google")}
-              className="bg-gradient-to-r from-rose-400 to-orange-400 hover:from-rose-500 hover:to-orange-500 text-white px-6 py-3 rounded-xl w-full font-medium transition-all duration-200 shadow-md hover:shadow-lg"
+              className="bg-rose-500 hover:bg-rose-600 text-white px-6 py-3 rounded-2xl w-full font-semibold transition-all duration-200 shadow-md hover:shadow-lg"
             >
               Sign in with Google
             </button>

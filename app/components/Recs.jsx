@@ -8,19 +8,18 @@ const Recs = () => {
     {
       title: "Local Attractions",
       desc: "Top-rated landmarks and must-visit spots around your destination.",
-      img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80", // beach
+      img: "55.jpg"
     },
     {
       title: "Best Food Spots",
       desc: "Authentic restaurants and cafes to taste the local cuisine.",
-      img: "https://images.unsplash.com/photo-1555992336-03a23c36ef53?auto=format&fit=crop&w=800&q=80", // food
+      img: "/22.jpg",
     },
     {
       title: "Hidden Gems",
       desc: "Peaceful and lesser-known places perfect for exploring quietly.",
-      img: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=800&q=80", // forest
-    },
-  ];
+      img: "/44.png",
+ } ];
 
   return (
     <section className="bg-[#fdfaf6] py-16 px-6 md:px-12">

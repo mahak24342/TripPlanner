@@ -4,17 +4,24 @@ import React, { useState } from "react";
 import { FiMenu, FiX, FiLogOut } from "react-icons/fi";
 import { FaPlaneDeparture } from "react-icons/fa";
 import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Navi = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { data: session } = useSession();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await signOut({ redirect: false }); // prevent default redirect
+    router.push("/"); // redirect manually
+  };
 
   return (
     <nav className="flex justify-between items-center px-6 py-4 bg-rose-200 backdrop-blur-xl border-b border-white/40 sticky top-0 z-20 shadow-sm">
       {/* Logo / Brand */}
       <div className="flex items-center space-x-2">
         <FaPlaneDeparture className="text-rose-500 text-2xl" />
-        <h1 className="text-2xl font-bold text-transparent bg-clip-text  bg-rose-500">
+        <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-rose-500">
           Travi<span className="text-black">AI</span>
         </h1>
       </div>
@@ -33,17 +40,14 @@ const Navi = () => {
 
         {session && (
           <div className="flex items-center space-x-4">
-            {/* User Avatar */}
             <img
               src={session.user?.image || "/default-avatar.png"}
               alt="User Avatar"
               className="w-9 h-9 rounded-full border border-white/50 shadow-sm"
             />
-
-            {/* Logout */}
             <button
-              onClick={() => signOut()}
-              className="flex items-center gap-2 bg-rose-500 hover:from-rose-500 hover:to-orange-500 text-white px-5 py-2 rounded-xl font-medium shadow-md hover:shadow-lg transition-all duration-200"
+              onClick={handleLogout}
+              className="flex items-center gap-2 bg-rose-500 hover:bg-rose-600 text-white px-5 py-2 rounded-xl font-medium shadow-md hover:shadow-lg transition-all duration-200"
             >
               <FiLogOut size={18} />
               Logout
@@ -87,10 +91,10 @@ const Navi = () => {
               />
               <button
                 onClick={() => {
-                  signOut();
+                  handleLogout();
                   setMenuOpen(false);
                 }}
-                className="flex items-center gap-2 bg-rose-500  hover:from-rose-500 hover:to-orange-500 text-white px-6 py-2 rounded-xl font-medium shadow-md hover:shadow-lg transition-all duration-200"
+                className="flex items-center gap-2 bg-rose-500 hover:bg-rose-600 text-white px-6 py-2 rounded-xl font-medium shadow-md hover:shadow-lg transition-all duration-200"
               >
                 <FiLogOut size={18} />
                 Logout
